@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_BUILD_TYPE Debug)
 
-project(ubirch-mbed-ble C CXX)
+project(ubirch-mbed-debug C CXX)
 set(CMAKE_CXX_STANDARD 98)
 
 # == MBED OS 5 settings ==
@@ -178,7 +178,6 @@ target_include_directories(edebug PUBLIC source)
 
 add_executable(debug-tests
         TESTS/edebug/basic/DebugTests.cpp
-#        TESTS/edebug/swo/DebugSWOTests.cpp
         )
 target_link_libraries(debug-tests mbed-os edebug)
 
