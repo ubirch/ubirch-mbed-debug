@@ -1,8 +1,6 @@
 /*!
  * @file
- * @brief TODO: ${FILE}
- *
- * ...
+ * @brief Debug function and macros definitions.
  *
  * @author Matthias L. Jugel
  * @date   2017-11-04

@@ -1,8 +1,6 @@
 /*!
  * @file
- * @brief TODO: ${FILE}
- *
- * ...
+ * @brief Implementations for the debug output functions.
  *
  * @author Matthias L. Jugel
  * @date   2017-11-04
@@ -32,6 +30,7 @@
 
 
 #if DEVICE_SERIAL && defined(EDEBUG_UART)
+
 static void *stdout_putp;
 extern int stdio_uart_inited;
 extern serial_t stdio_uart;
@@ -49,6 +48,7 @@ void __edebug_setup(void *putp, void (*putf)(void *, char)) {
 }
 
 #elif defined(ENABLE_SWO) && defined(EDEBUG_SWO)
+
 static void *stdout_putp;
 
 inline void __edebug_putc(void *putb, char c) {
