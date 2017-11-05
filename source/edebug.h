@@ -84,14 +84,14 @@ void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size);
 
 #else
 
-#define __edebug_putc(...)      (void)0
-#define __edebug_printf(...)    (void)0
-#define __edebug_sprintf(...)   (void)0
-#define EDEBUG_SETUP(ptr)       //!< no setup edebug
-#define EDEBUG_DUMP(p, b, l)    //!< no hex dump a buffer
-#define EDEBUG_HEX(p, b, l)     //!< no hex dump simple
-#define EDEBUG_PRINTF(...)      //!< no print a string
-#define EDEBUG_SPRINTF(...)     //!< no print string to buffer
+#define __edebug_putc(...)      ((void)0)
+#define __edebug_printf(...)    ((void)0)
+#define __edebug_sprintf(...)   ((void)0)
+#define EDEBUG_SETUP(ptr)       ((void)0) //!< no setup edebug
+#define EDEBUG_DUMP(p, b, l)    ((void)0) //!< no hex dump a buffer
+#define EDEBUG_HEX(p, b, l)     ((void)0) //!< no hex dump simple
+#define EDEBUG_PRINTF(...)      ((void)0) //!< no print a string
+#define EDEBUG_SPRINTF(...)     ((void)0) //!< no print string to buffer
 
 #endif
 #ifdef __cplusplus

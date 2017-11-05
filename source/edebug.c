@@ -30,6 +30,7 @@
 
 
 #if DEVICE_SERIAL && defined(EDEBUG_UART)
+#include <serial_api.h>
 
 static void *stdout_putp;
 extern int stdio_uart_inited;
@@ -43,7 +44,7 @@ void __edebug_setup(void *putp, void (*putf)(void *, char)) {
     if (!stdio_uart_inited) {
         serial_init(&stdio_uart, STDIO_UART_TX, STDIO_UART_RX);
     }
-    stdout_putp = putb;
+    stdout_putp = putp;
     init_printf(putp, putf);
 }
 
