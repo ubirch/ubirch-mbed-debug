@@ -95,7 +95,7 @@ void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size) {
     __edebug_printf("\r\n");
 }
 
-#if MBED_CONF_RTOS_PRESENT
+#if MBED_CONF_RTOS_PRESENT && MBED_MAJOR_VERSION >= 5 && MBED_MINOR_VERSION >= 6
 
 #include <mbed_critical.h>
 #include <rtx_os.h>
