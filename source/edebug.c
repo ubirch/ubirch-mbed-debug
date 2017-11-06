@@ -97,9 +97,10 @@ void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size) {
 
 #if MBED_CONF_RTOS_PRESENT
 
-#include <mbed.h>
+#include <mbed_critical.h>
+#include <rtx_os.h>
 
-static void __edebug_mbed_print_threads() {
+void __edebug_mbed_print_threads() {
     core_util_critical_section_enter();
     for (struct osRtxThread_s *t = osRtxInfo.thread.delay_list; t != NULL; t = t->thread_next) {
         EDEBUG_PRINTF("DELY: 0x%08x: 0x%08x [%s] %d\r\n", t, t->thread_addr, t->name, t->stack_size);
