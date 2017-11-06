@@ -72,6 +72,17 @@ void __edebug_hex_dump(const char *prefix, const uint8_t *b, size_t size);
  */
 void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size);
 
+#if MBED_CONF_RTOS_PRESENT
+
+/**
+ * Print the threads that are waiting, delayed or running in the RTOS.
+ */
+void __edebug_mbed_print_threads();
+
+#define EDEBUG_PRINT_THREADS()  __edebug_mbed_print_threads()           //!< print threads in the system
+
+#endif
+
 // lets wrap the printf/sprintf
 #define __edebug_printf(...)    tfp_printf(__VA_ARGS__)
 #define __edebug_sprintf(...)   tfp_sprintf(__VA_ARGS__)
@@ -82,11 +93,14 @@ void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size);
 #define EDEBUG_PRINTF(...)      __edebug_printf(__VA_ARGS__)            //!< print a string
 #define EDEBUG_SPRINTF(...)     __edebug_sprintf(__VA_ARGS__)           //!< print string to buffer
 
+
 #else
 
-#define __edebug_putc(...)      ((void)0)
-#define __edebug_printf(...)    ((void)0)
-#define __edebug_sprintf(...)   ((void)0)
+#define EDEBUG_PRINT_THREADS()  ((void)0) //!< do not print thread info
+
+#define __edebug_putc(...)      ((void)0) //!< putc disabled
+#define __edebug_printf(...)    ((void)0) //!< printf disabled
+#define __edebug_sprintf(...)   ((void)0) //!< sprintf disabled
 #define EDEBUG_SETUP(ptr)       ((void)0) //!< no setup edebug
 #define EDEBUG_DUMP(p, b, l)    ((void)0) //!< no hex dump a buffer
 #define EDEBUG_HEX(p, b, l)     ((void)0) //!< no hex dump simple
