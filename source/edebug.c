@@ -59,7 +59,7 @@ inline void __edebug_putc(void *putb, char c) {
         ITM->TER |= 1;
     }
 
-    ITM_SendChar(c);
+    ITM_SendChar((uint32_t) c);
 }
 
 #pragma GCC diagnostic push
