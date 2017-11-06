@@ -4,6 +4,8 @@
 
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_COMPILER_WORKS TRUE)
+set(CMAKE_CXX_COMPILER_WORKS TRUE)
 
 project(ubirch-mbed-debug C CXX)
 set(CMAKE_CXX_STANDARD 98)
@@ -173,7 +175,7 @@ add_library(mbed-os ${MBED_OS_SRCS})
 include_directories(${MBED_OS})
 # == END MBED OS 5 ==
 
-add_library(edebug source/edebug.c source/edebug.h source/printf/printf.c source/printf/printf.h)
+add_library(edebug source/edebug.c source/edebug.h source/edebug_rtx.cpp source/printf/printf.c source/printf/printf.h)
 target_include_directories(edebug PUBLIC source)
 
 add_executable(debug-tests

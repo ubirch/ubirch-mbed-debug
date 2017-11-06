@@ -72,7 +72,7 @@ void __edebug_hex_dump(const char *prefix, const uint8_t *b, size_t size);
  */
 void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size);
 
-#if MBED_CONF_RTOS_PRESENT && MBED_MAJOR_VERSION >= 5 && MBED_MINOR_VERSION >= 6
+#if MBED_CONF_RTOS_PRESENT
 
 /**
  * Print the threads that are waiting, delayed or running in the RTOS.

@@ -94,24 +94,3 @@ void __edebug_hex_xxd(const char *prefix, const uint8_t *b, size_t size) {
     for (unsigned int i = 0; i < size; i++) __edebug_printf("%02x", b[i]);
     __edebug_printf("\r\n");
 }
-
-#if MBED_CONF_RTOS_PRESENT && MBED_MAJOR_VERSION >= 5 && MBED_MINOR_VERSION >= 6
-
-#include <mbed_critical.h>
-#include <rtx_os.h>
-
-void __edebug_mbed_print_threads() {
-    core_util_critical_section_enter();
-    for (struct osRtxThread_s *t = osRtxInfo.thread.delay_list; t != NULL; t = t->thread_next) {
-        EDEBUG_PRINTF("DELY: 0x%08x: 0x%08x [%s] %d\r\n", t, t->thread_addr, t->name, t->stack_size);
-    }
-    for (struct osRtxThread_s *t = osRtxInfo.thread.wait_list; t != NULL; t = t->thread_next) {
-        EDEBUG_PRINTF("WAIT: 0x%08x: 0x%08x [%s] %d\r\n", t, t->thread_addr, t->name, t->stack_size);
-    }
-    for (struct osRtxThread_s *t = osRtxInfo.thread.idle; t != NULL; t = t->thread_next) {
-        EDEBUG_PRINTF("IDLE: 0x%08x: 0x%08x [%s] %d\r\n", t, t->thread_addr, t->name, t->stack_size);
-    }
-    core_util_critical_section_exit();
-}
-
-#endif
