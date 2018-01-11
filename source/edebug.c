@@ -22,7 +22,7 @@
  * ```
  */
 
-#if defined(NRF52)
+#if defined(TARGET_NORDIC)
 #include <nrf52_bitfields.h>
 #endif
 
@@ -68,11 +68,23 @@ inline void __edebug_putc(void *putb, char c) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 void __edebug_setup(void *putp, void (*putf)(void *, char)) {
-#if defined(NRF52)
+#if defined(TARGET_NORDIC)
     NRF_CLOCK->TRACECONFIG = (NRF_CLOCK->TRACECONFIG & ~CLOCK_TRACECONFIG_TRACEPORTSPEED_Msk) |
                              (CLOCK_TRACECONFIG_TRACEPORTSPEED_4MHz << CLOCK_TRACECONFIG_TRACEPORTSPEED_Pos);
+#elif defined(TARGET_KSDK2_MCUS)
+    uint32_t SWOSpeed = 4000000; //6000kbps, default for JLinkSWOViewer
+    uint32_t SWOPrescaler = (SystemCoreClock / SWOSpeed) - 1; // SWOSpeed in Hz, note that F_CPU is expected to be 96000000 in this case
+    CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
+    *((volatile unsigned *)(ITM_BASE + 0x400F0)) = 0x00000002; // "Selected PIN Protocol Register": Select which protocol to use for trace output (2: SWO)
+    *((volatile unsigned *)(ITM_BASE + 0x40010)) = SWOPrescaler; // "Async Clock Prescaler Register". Scale the baud rate of the asynchronous output
+    *((volatile unsigned *)(ITM_BASE + 0x00FB0)) = 0xC5ACCE55; // ITM Lock Access Register, C5ACCE55 enables more write access to Control Register 0xE00 :: 0xFFC
+    ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk; // ITM Trace Control Register
+    ITM->TPR = ITM_TPR_PRIVMASK_Msk; // ITM Trace Privilege Register
+    ITM->TER = 0x00000001; // ITM Trace Enable Register. Enabled tracing on stimulus ports. One bit per stimulus port.
+    *((volatile unsigned *)(ITM_BASE + 0x01000)) = 0x400003FE; // DWT_CTRL
+    *((volatile unsigned *)(ITM_BASE + 0x40304)) = 0x00000100; // Formatter and Flush Control Register
 #else
-#error "no trace config for this platform"
+    //#error "no trace config for this platform"
 #endif
     stdout_putp = putp;
     init_printf(putp, putf);
