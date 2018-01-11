@@ -4,6 +4,12 @@ Using printf for debugging can be quite a memory and flash hog. If you want to g
 of it, use this little library. Additionally, it can send its output also via the SWO
 line of your debugger.
 
+### Supported Targets (SWO)
+
+- Nordic nRF52
+- *other targets still need enabling of SWO*
+
+
 ```bash
 mbed add https://github.com/ubirch/ubirch-mbed-debug
 ```

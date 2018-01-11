@@ -17,3 +17,6 @@ mbed-os*
 .mbed
 testmem.csv
 testresult.xml
+CMakeLists.txt
+GettingStarted.html
+mbed_config.h

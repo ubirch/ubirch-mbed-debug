@@ -22,7 +22,10 @@
  * ```
  */
 
+#if defined(NRF52)
 #include <nrf52_bitfields.h>
+#endif
+
 #include <cmsis.h>
 #include <stddef.h>
 #include <string.h>
@@ -65,8 +68,12 @@ inline void __edebug_putc(void *putb, char c) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 void __edebug_setup(void *putp, void (*putf)(void *, char)) {
+#if defined(NRF52)
     NRF_CLOCK->TRACECONFIG = (NRF_CLOCK->TRACECONFIG & ~CLOCK_TRACECONFIG_TRACEPORTSPEED_Msk) |
                              (CLOCK_TRACECONFIG_TRACEPORTSPEED_4MHz << CLOCK_TRACECONFIG_TRACEPORTSPEED_Pos);
+#else
+#error "no trace config for this platform"
+#endif
     stdout_putp = putp;
     init_printf(putp, putf);
 }
