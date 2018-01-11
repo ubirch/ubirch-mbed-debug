@@ -20,3 +20,4 @@ testresult.xml
 CMakeLists.txt
 GettingStarted.html
 mbed_config.h
+*.pyc
