@@ -1,8 +1,8 @@
 /*!
  * @file
- * @brief TODO: ${FILE}
+ * @brief RTOS specific functions.
  *
- * ...
+ * Function to print RTOS threads and their stack size.
  *
  * @author Matthias L. Jugel
  * @date   2017-11-06
