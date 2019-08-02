@@ -24,6 +24,7 @@
  * ```
  */
 
+#include <mbed_critical.h>
 #include "edebug.h"
 
 #if MBED_CONF_RTOS_PRESENT
